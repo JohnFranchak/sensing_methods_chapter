@@ -1,19 +1,19 @@
 ---
-title: "My Title"
-shorttitle: "Short Title in Running Header"
+title: "Machine Learning Classification of Infants' Full-Day Movements"
+shorttitle: "Classifying Movements"
 author:
-  - name: Jane Doe
+  - name: John M. Franchak
     corresponding: true
-    orcid: 0000-0000-0000-0001
-    email: janedoe@generic.edu
+    orcid: 0000-0002-0751-2864
+    email: franchak@ucr.edu
     affiliations:
-      - name: Generic University
-        department: Department of Scholarly Studies
-        address: 1234 Capital St.
-        city: New York
-        region: NY
+      - name: University of California, Riverside
+        department: Department of Psychology
+        address: 900 University Avenue
+        city: Riverside
+        region: CA
         country: USA
-        postal-code: 12084-1234
+        postal-code: 92521
 author-note:
   status-changes: 
     affiliation-change: ~
@@ -27,50 +27,74 @@ author-note:
     gratitude: ~
     authorship-agreements: ~
 abstract: "This document is a template."
-impact-statement: "This template helps you get started."
+impact-statement: ~
 keywords: [Keyword 1, Keyword 2, Keyword 3]
-bibliography: bibliography.bib
+bibliography: references.bib
 format:
   apaquarto-docx: default
   apaquarto-html: default
-  apaquarto-typst: 
-    keep-typ: true
   apaquarto-pdf:
     documentmode: man
 ---
 
-<!-- The introduction should not have a level-1 heading such as Introduction. -->
+What makes up a day? Pull from EMA paper and make an establishing timeline. Full day is important, but its difficult to study. Video is the gold standard, but full day video is challenging.
 
-This is my first paragraph. Any section headings in the introduction should be in levels 2--5.
+LENA is best success in full day recording; transcription is resource intensive, wearable audio is easy to collect, job is needing an algorithm to translate .wav into AWC. Analogous challenge for wearable IMUs. What's been done already. [@AiraksinenRasanen2020].
 
-## Section in Introduction
+Chapter focuses on our workflow used in past work focusing on full-day position and restraint [@FranchakTang2024; @KretchEnriques2026; @WangHRouseyHFranchakJM2026].
 
-This is a reference [@cohen2003applied].
+# Data Collection
 
-# Method
+Some past work in the lab. Focus here is in the home. Current limits, etc. 
 
-## Participants
+## Inertial Movement Units
+Accel and gyro
+Number of sensors
+Sensor placement 
 
-## Measures
+## Sensor Garment
 
-## Procedure
+## Capturing Ground Truth Video
+Synchronization
+Amount of data
+Coverage of positions (e.g. sitting variations) and mix of freeplay
 
-# Results
+## Full-Day or Multiple-Day Considerations
+Capturing data past video recorded portion
+Nap/wear time logging Sensor drift
 
-# Discussion
+# Data Processing and Model Training
 
-## Limitations and Future Directions
+## Extracting Motion Features
+Window size
+Features
+Accel vs. gyro features (Airaksinen)
 
-## Conclusion
+## Scoring Ground Truth
+Synchronization
+Developing coding scheme is what determines output
+
+# Model Evaluation
+Point to general refs about binary and multi-class categorization
+Project needs dictate what is relevant for evaluation (overall metrics vs. bouts, absolute time vs. relative time, generalization to new exemplars vs. best prediction of current data)
+
+## Training/Testing Partition
+
+Individual models vs. group models and generalization
+LOOCV examples 
+Sensor CP model composition and size examples
+
+## Evaluation Metrics
+
+Accuracy/kappa
+Kaya lab paper
+
+Continuous outcomes (Yao) for prevalence predictions
+Bout structure
+
+# Applications
 
 # References
 
-<!-- References will auto-populate in the refs div below -->
-
 ::: {#refs}
 :::
-
-# This Section Is an Appendix {#apx-a}
-
-
-# Another Appendix {#apx-b}
