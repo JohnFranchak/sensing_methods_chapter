@@ -37,7 +37,9 @@ format:
     documentmode: man
 ---
 
-What makes up a day? Pull from EMA paper and make an establishing timeline. Full day is important, but its difficult to study. Video is the gold standard, but full day video is challenging.
+Position and restraint describe opportunities to practice motor skills and to interact with the physical and social world.  
+
+Movement is distributed heterogeneously. Full day is important, but its difficult to study. Video is the gold standard, but full day video is challenging.
 
 LENA is best success in full day recording; transcription is resource intensive, wearable audio is easy to collect, job is needing an algorithm to translate .wav into AWC. Analogous challenge for wearable IMUs. What's been done already. [@AiraksinenRasanen2020].
 
@@ -45,14 +47,14 @@ Chapter focuses on our workflow used in past work focusing on full-day position 
 
 # Data Collection
 
-Some past work in the lab. Focus here is in the home. Current limits, etc. 
+Some past work in the lab. Focus here is in the home. Current limits (driving/strollers). 
 
-## Inertial Movement Units
+## Sensor Garment
+Interior pockets with closures for safety
 Accel and gyro
 Number of sensors
 Sensor placement 
-
-## Sensor Garment
+Maiju's approach; other work w/ chestworn sensor (Greenspan)
 
 ## Capturing Ground Truth Video
 Synchronization
