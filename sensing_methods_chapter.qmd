@@ -37,9 +37,11 @@ format:
     documentmode: man
 ---
 
-Position and restraint describe opportunities to practice motor skills and to interact with the physical and social world.  
+Everyday learning inputs—visual experiences, object interactions, and social exchanges—are filtered through infants' motor systems. In this chapter, I focus on two aspects of movement: position and restraint. Position refers to the configuration of the body with respect to gravity, such as lying supine on the back, prone on the stomach (whether stationary or crawling), sitting, or standing upright (whether stationary or walking). Infants' position from moment to moment shapes their view of objects and faces (LUO; KRETCH), constrains how they explore objects in their hands (SOSKA), and predicts the frequency of adults' speech [@RouseyTang2026]. Restraint refers to infants' opportunity to switch positions. When infants are restrained, such as held in a caregiver's arms or strapped into a car seat or high chair, they cannot change positions. When unrestrained, infants can voluntarily switch between positions in their motor skill repertoire. Restraint also shapes everyday learning inputs: Infants have broader views of the environment when carried off the ground (KRETCH), but infants have less access to objects (FRANCHAK KADOOKA) and hear less adult speech when restrained (MALACHOWSKI).
 
-Movement is distributed heterogeneously. Full day is important, but its difficult to study. Video is the gold standard, but full day video is challenging.
+Thus, infants' opportunities for learning depending on how much time they spend in different positions and restraint in everyday life, which vary according to infants' age, motor skill development, and caregiving choices. With age, infants spend less time supine and restrained and spend more time sitting and standing (KRETCH, FRANCHAKKADOOKA, FRANCHAKDP FRANCHAK2019).
+
+POSTURE AND RESTRAINT CHANGE WITH AGE AND MOTOR SKILL DEVEL. Movement is distributed heterogeneously. Full day is important, but its difficult to study. Video is the gold standard, but full day video is challenging.
 
 LENA is best success in full day recording; transcription is resource intensive, wearable audio is easy to collect, job is needing an algorithm to translate .wav into AWC. Analogous challenge for wearable IMUs. What's been done already. [@AiraksinenRasanen2020].
 
@@ -47,52 +49,43 @@ Chapter focuses on our workflow used in past work focusing on full-day position 
 
 # Data Collection
 
-Some past work in the lab. Focus here is in the home. Current limits (driving/strollers). 
+Some past work in the lab. Focus here is in the home. Current limits (driving/strollers).
 
 ## Sensor Garment
-Interior pockets with closures for safety
-Accel and gyro
-Number of sensors
-Sensor placement 
-Maiju's approach; other work w/ chestworn sensor (Greenspan)
+
+Interior pockets with closures for safety Accel and gyro Number of sensors Sensor placement Maiju's approach; other work w/ chestworn sensor (Greenspan)
 
 ## Capturing Ground Truth Video
-Synchronization
-Amount of data
-Coverage of positions (e.g. sitting variations) and mix of freeplay
+
+Synchronization Amount of data Coverage of positions (e.g. sitting variations) and mix of freeplay
 
 ## Full-Day or Multiple-Day Considerations
-Capturing data past video recorded portion
-Nap/wear time logging Sensor drift
+
+Capturing data past video recorded portion Nap/wear time logging Sensor drift Show examples of multi-day data
 
 # Data Processing and Model Training
 
 ## Extracting Motion Features
-Window size
-Features
-Accel vs. gyro features (Airaksinen)
+
+Window size Features Accel vs. gyro features (Airaksinen) alignment of motion features to the actual behavior
 
 ## Scoring Ground Truth
-Synchronization
-Developing coding scheme is what determines output
+
+Synchronization Developing coding scheme is what determines output
 
 # Model Evaluation
-Point to general refs about binary and multi-class categorization
-Project needs dictate what is relevant for evaluation (overall metrics vs. bouts, absolute time vs. relative time, generalization to new exemplars vs. best prediction of current data)
+
+Point to general refs about binary and multi-class categorization Project needs dictate what is relevant for evaluation (overall metrics vs. bouts, absolute time vs. relative time, generalization to new exemplars vs. best prediction of current data)
 
 ## Training/Testing Partition
 
-Individual models vs. group models and generalization
-LOOCV examples 
-Sensor CP model composition and size examples
+Individual models vs. group models and generalization LOOCV examples Sensor CP model composition and size examples
 
 ## Evaluation Metrics
 
-Accuracy/kappa
-Kaya lab paper
+Accuracy/kappa Kaya lab paper
 
-Continuous outcomes (Yao) for prevalence predictions
-Bout structure
+Continuous outcomes (Yao) for prevalence predictions Bout structure
 
 # Applications
 
