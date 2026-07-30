@@ -67,7 +67,7 @@ Training and validating a supervised machine learning model requires ground trut
 
 Unlike laboratory studies, which can be scheduled to ideally avoid infant's naps and bath times, capturing full-day data means that there are necessary interruptions to sensor recording. Machine learning models attempt to predict the best category for every data point recorded by sensors, which means they will attempt to label times where the sensor garment is crumpled on the floor while the infant takes a bath. Thus, it is important to distinguish when infants are wearing the sensors to make predictions only during those times. Our approach is to ask caregivers to log the beginning and end of every nap and any other time that infants are not wearing the leggings, such as diaper changes and baths. Caregivers also remove the leggings and log any times that they leave the house (e.g., trips to the grocery store or walks around the neighborhood). Although it is possible for infants to wear the leggings out of the home, current models are not validated to distinguish transport behaviors such as riding in a car or stroller.
 
-Thus, the full recording time from when infants first put on the leggings until they take them off before bedtime is longer than the amount of usable data when infants are awake and wearing the sensors. In our past work, we recorded XX sessions from XX infants in hopes of capturing the full waking day. Full recording time ranged from XX-XX (M = X) and usable data time ranged from XX-XX (M = X). Shorter usable sessions resulted from long excursions out of the house combined with long naps at home.
+Thus, the full recording time from when infants first put on the leggings until they take them off before bedtime is longer than the amount of usable data when infants are awake and wearing the sensors. In our past work, we recorded 136 sessions from 67 infants in hopes of capturing the full waking day [for a more detailed description of the dataset, see @RouseyTang2026; @FranchakRousey2026]. Full recording time ranged from 2-12 hours (median = 9.8) and usable data time ranged from 2-10.5 hours (median = 5.8). Shorter usable recording time resulted from long excursions out of the house combined with long naps at home.
 
 In ongoing work, we are recording multiple days of data from each participant to investigate the day-to-day consistency of motor experiences (NEED IN PREP CITE). Although the Axivity sensors can easily record data for a full week, adding additional days of data collection introduces additional challenges. First, caregivers must switch the sensors into a clean garment each day, which requires clear labels and instructions to ensure that sensors are placed in the correct location and orientation. Second, long recordings can introduce timing drift due to small differences in the internal clocks of each sensor. By creating a synchronization point each morning by asking the caregiver to drop the sensor garment on the floor, we can correct for drift to ensure that the sensors are synchronized.
 
@@ -77,23 +77,21 @@ In ongoing work, we are recording multiple days of data from each participant to
 
 Window size Features Accel vs. gyro features (Airaksinen) alignment of motion features to the actual behavior
 
-## Scoring Ground Truth
-
-Synchronization Developing coding scheme is what determines output
-
-# Model Evaluation
-
-Point to general refs about binary and multi-class categorization Project needs dictate what is relevant for evaluation (overall metrics vs. bouts, absolute time vs. relative time, generalization to new exemplars vs. best prediction of current data)
-
-## Training/Testing Partition
+## Model Training and Testing
 
 Individual models vs. group models and generalization LOOCV examples Sensor CP model composition and size examples
 
-## Evaluation Metrics
+Point to general refs about binary and multi-class categorization Project needs dictate what is relevant for evaluation (overall metrics vs. bouts, absolute time vs. relative time, generalization to new exemplars vs. best prediction of current data)
+
+## Validation of Position and Restraint Models
 
 Accuracy/kappa Kaya lab paper
 
-Continuous outcomes (Yao) for prevalence predictions Bout structure
+Continuous outcomes (Yao) for prevalence predictions
+
+Distal comparison
+
+Bout structure
 
 # Applications
 
