@@ -12,7 +12,7 @@ theme_update(text = element_text(size = 12),
              axis.title.y = element_text(size = 14), 
              panel.background = element_blank(),panel.border = element_blank(), 
              panel.grid.major = element_blank(),
-             panel.grid.minor = element_blank(), axis.line = element_blank(), 
+             panel.grid.minor = element_blank(),
              axis.ticks.length=unit(.25, "cm"), 
              legend.key = element_rect(fill = "white")) 
 
@@ -55,12 +55,28 @@ ds_sum_imu <- ds_sum_imu %>% rename(Position = pos) %>%
     session == 1 & age_group == "Younger" ~ 4,
     session == 2 & age_group == "Younger" ~ 5,
     session == 3 & age_group == "Younger" ~ 6,
-    session == 4 & age_group == "Younger" ~ 7,
-    session == 1 & age_group == "Older" ~ 11,
+    session == 4 & age_group == "Younger" ~ 6.75,
+    session == 1 & age_group == "Older" ~ 11.25,
     session == 2 & age_group == "Older" ~ 12,
     session == 3 & age_group == "Older" ~ 13,
     session == 4 & age_group == "Older" ~ 14)) %>% select(-agemo)
 
+ds_sum_imu_rest <- ds %>% group_by(id, session) %>% 
+  mutate(total_samples = n()) %>% group_by(id, session, pos, unrestrained, agemo) %>% 
+  summarize(pos_n  = n(), total_samples = mean(total_samples)) %>% ungroup %>% 
+  mutate(age_group = factor(ifelse(agemo < 8, 0, 1), labels = c("Younger","Older")))
+ds_sum_imu_rest <- ds_sum_imu_rest %>% complete(nesting(id, session), pos, unrestrained, fill = list(pos_n = 0, total_samples = 1))
+ds_sum_imu_rest$pos_prop = ds_sum_imu_rest$pos_n/ds_sum_imu_rest$total_samples*100
+ds_sum_imu_rest <- ds_sum_imu_rest %>% rename(Position = pos, Restraint = unrestrained) %>% 
+  mutate(age = case_when(
+    session == 1 & age_group == "Younger" ~ 4,
+    session == 2 & age_group == "Younger" ~ 5,
+    session == 3 & age_group == "Younger" ~ 6,
+    session == 4 & age_group == "Younger" ~ 6.75,
+    session == 1 & age_group == "Older" ~ 11.25,
+    session == 2 & age_group == "Older" ~ 12,
+    session == 3 & age_group == "Older" ~ 13,
+    session == 4 & age_group == "Older" ~ 14)) %>% select(-agemo)
 
 # Pull in SiP
 library(pins)
@@ -86,9 +102,27 @@ ds_sum_sip <- ds_sum_sip %>% mutate(
 ) %>% rename(Position = pos) %>% mutate(id = as.numeric(id))
 ds_sum_sip$age_group <- "Middle"
 
+ds_sum_sip_rest <- ds_sip %>% group_by(id, session) %>% 
+  mutate(total_samples = n()) %>% group_by(id, session, pos, restraint) %>% 
+  summarize(pos_n  = n(), total_samples = mean(total_samples)) %>% ungroup
+ds_sum_sip_rest <- ds_sum_sip_rest %>% complete(nesting(id, session), pos, restraint, fill = list(pos_n = 0, total_samples = 1))
+ds_sum_sip_rest$pos_prop = ds_sum_sip_rest$pos_n/ds_sum_sip_rest$total_samples*100
+ds_sum_sip_rest$session = as.numeric(ds_sum_sip_rest$session)
+ds_sum_sip_rest <- ds_sum_sip_rest %>% mutate(
+  age = case_when(
+    session == 1 ~ 7.25,
+    session == 2 ~ 9,
+    session == 3 ~ 10.75
+  )
+) %>% rename(Position = pos, Restraint = restraint) %>% mutate(id = as.numeric(id))
+ds_sum_sip_rest$age_group <- "Middle"
+
+## Merge for posture only
+
 ds_merged <- ds_sum_sip %>% bind_rows(ds_sum_imu) %>% 
   mutate(Position = ifelse(Position == "Upright", "Standing", as.character(Position)),
-         id_uni = str_glue("{id}_{session}"))
+         id_uni = str_glue("{id}_{session}"),
+         model = ifelse(age_group == "Middle", "Axivity","Biostamp"))
 
 ggplot(ds_merged) +
   stat_summary(aes(x = age, y = pos_prop, group = id_uni, color = age_group), geom = "point", shape = 21,  size = 2.5, alpha = .85) +
@@ -102,3 +136,39 @@ ggplot(ds_merged) +
     legend.justification = c("right", "bottom"),
     legend.margin = margin(4, 6, 4, 6)
   )
+
+## Merge for posture and restraint
+
+ds_merged_rest <- ds_sum_sip_rest %>% bind_rows(ds_sum_imu_rest) %>% 
+  mutate(Position = ifelse(Position == "Upright", "Standing", as.character(Position)),
+         id_uni = str_glue("{id}_{session}"),
+         model = ifelse(age_group == "Middle", "Axivity","Biostamp"))
+
+ggplot(ds_merged_rest) +
+  stat_summary(aes(x = age, y = pos_prop, group = id_uni, shape = model), geom = "point", size = 2.5, color = "gray") +
+  geom_smooth(aes(x = age, y = pos_prop), se = F, color = "black") +   
+  facet_grid(Position ~ Restraint) + 
+  scale_shape_manual(values = c(24,21), name = "Model") + 
+  scale_x_continuous(name = "Age (months)", breaks = 4:14, limits = c(3,15)) + 
+  scale_y_continuous(name = "Percentage of awake time", breaks = seq(0, 100, 25), limits = c(-5, 105)) +
+  guides(color = guide_legend(nrow = 1)) +
+  theme(legend.position = "bottom"  )
+
+## Merge in as total
+ds_total <- ds_merged %>% mutate(Restraint = "Total")  %>%  
+  bind_rows(ds_merged_rest) %>% 
+  mutate(model = factor(model, levels = c("Biostamp","Axivity")),
+        Restraint = factor(Restraint, levels = c("Restrained","Unrestrained","Total")),
+         Position = factor(Position, levels = c("Held","Supine","Prone","Sitting","Standing")))
+
+ggplot(ds_total) +
+  geom_hline(yintercept = -Inf, color = "black", linewidth = 0.8) +
+  stat_summary(aes(x = age, y = pos_prop, group = id_uni, shape = model), geom = "point", size = 1.75, color = "darkgray", stroke = .25) +
+  geom_smooth(aes(x = age, y = pos_prop), se = F, color = "black") +   
+  facet_grid(Restraint ~ Position) + 
+  scale_shape_manual(values = c(24,21), name = "Model") + 
+  scale_x_continuous(name = "Age (months)", breaks = c(5,7,9,11,13), limits = c(3,15)) + 
+  scale_y_continuous(name = "Percentage of awake time", breaks = seq(0, 100, 25), limits = c(-1, 101)) +
+  guides(color = guide_legend(nrow = 1)) +
+  theme(legend.position = "bottom", axis.line = element_line(color = "black", linewidth = 0.4))
+ggsave("age_figure.png",width = 7.5, height = 5.5, unit = "in", scale = 1)

@@ -45,9 +45,11 @@ Consequently, position and restraint are distributed heterogeneously throughout 
 
 Categorizing infant movement from wearable sensors provides an alternative to video that is well-suited to collecting full-day behavior in the home. Customized sensor garments that embed one or more inertial movement units (IMUs) into infant leggings or "onesies" can be worn for an entire day or multiple days, recording temporally-rich data wherever the infant goes [@AiraksinenRasanen2020; @FranchakTang2024; @GreenspanCunha2021; @McElwainFisher2024]. Collecting and annotating a relatively small amount of ground truth video has allowed researchers to train machine learning models that categorize infant position [@AiraksinenRasanen2020; @FranchakTang2024; @KretchEnriques2026] and holding/restraint [@WangRousey2026; @AiraksinenGallen2022; @YaoPlotz2019] from the IMU signals.
 
-In the remainder of this chapter, I describe how to collect wearable sensor data, process and train machine learning models, and evaluate model accuracy for infant movement detection in the home. Although I focus on the workflow developed in my lab for categorizing infant position and restraint [@FranchakTang2024; @KretchEnriques2026; @WangRousey2026], the approach could be extended to categorize other movements across different participant populations. Indeed, the same workflow has allowed us to train models to accurately categorize when infants' adult caregivers are standing upright throughout the day. I end the chapter with a review of current and future applications that can leverage full-day wearable sensor detection of natural movement.
+In the remainder of this chapter, I describe how to collect wearable sensor data, process and train machine learning models, and evaluate model accuracy for infant movement detection in the home. Although I focus on the workflow developed in my lab for categorizing infant position and restraint [@FranchakTang2024; @KretchEnriques2026; @WangRousey2026], the approach could be extended to categorize other movements across different participant populations. Indeed, the same workflow has allowed us to train models to  categorize when infants' adult caregivers are standing upright throughout the day. I end the chapter with a review of current and future applications that can leverage full-day wearable sensor detection of natural movement.
 
 # Data Collection
+
+
 
 Some past work in the lab. Focus here is in the home. Current limits (driving/strollers).
 
@@ -88,6 +90,15 @@ Accuracy/kappa Kaya lab paper
 Continuous outcomes (Yao) for prevalence predictions Bout structure
 
 # Applications
+
+```{r fig-timelines}
+#| fig-cap: Full-day predictions of position and restraint time by age 
+#| fig-width: 7.5 
+#| fig-height: 6 
+#| apa-note: Each column shows one position's time when restrained (top row), unrestrained (middle row) or in total (bottom row). Each point indicates data from one infant's session. Solid black lines indicate LOESS trends with age in months. Sessions were drawn from studies that used two different inertial sensors with different corresponding models (triangular points indicate Biostamp sensors, circular points indicate Axivity sensors). Data from both models at 7 and 11 months suggest that both models yield similar results. 
+
+knitr::include_graphics('age_figure.png')
+```
 
 Mobile health and surveillance (Airaksinen)
 
