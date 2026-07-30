@@ -69,6 +69,8 @@ Unlike laboratory studies, which can be scheduled to ideally avoid infant's naps
 
 Thus, the full recording time from when infants first put on the leggings until they take them off before bedtime is longer than the amount of usable data when infants are awake and wearing the sensors. In our past work, we recorded XX sessions from XX infants in hopes of capturing the full waking day. Full recording time ranged from XX-XX (M = X) and usable data time ranged from XX-XX (M = X). Shorter usable sessions resulted from long excursions out of the house combined with long naps at home.
 
+In ongoing work, we are recording multiple days of data from each participant to investigate the day-to-day consistency of motor experiences (NEED IN PREP CITE). Although the Axivity sensors can easily record data for a full week, adding additional days of data collection introduces additional challenges. First, caregivers must switch the sensors into a clean garment each day, which requires clear labels and instructions to ensure that sensors are placed in the correct location and orientation. Second, long recordings can introduce timing drift due to small differences in the internal clocks of each sensor. By creating a synchronization point each morning by asking the caregiver to drop the sensor garment on the floor, we can correct for drift to ensure that the sensors are synchronized.
+
 # Data Processing and Model Training
 
 ## Extracting Motion Features
