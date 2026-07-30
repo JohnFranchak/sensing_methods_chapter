@@ -43,9 +43,9 @@ Thus, infants' opportunities for learning depending on how much time they spend 
 
 Consequently, position and restraint are distributed heterogeneously throughout the day [@FranchakRousey2026; @FranchakTang2024]. An hour spent playing might involve a long bout of time unrestrained during which the infant switches between sitting, prone, and standing positions. An hour spent eating a meal might involve a continuous bout of sitting while restrained in a high chair. An hour spent playing, fussing, and nursing could involve frequent switches between laying on the couch, crawling on the floor, and being held in caregivers' arms. This poses a challenge for researchers who wish to measure everyday position and restraint, because sampling any single hour might fail to capture the full variation in movement across a day. Most video observations of infants' home behavior sample 1-2 hours at most [e.g., @HerzbergFletcher2021], meaning that other parts of the daily routine go unobserved. Capturing a full waking day of infants' movements on video would also mean labor-intensive video coding, which could take as many as 5 hours per hour video to annotate [@FranchakTang2024].
 
-Categorizing infant movement from wearable sensors provides an alternative to video that is well-suited to collecting full-day behavior in the home. Customized sensor garments that embed one or more inertial movement units into infant leggings or onesies can be worn for an entire day or multiple days, recording temporally-rich data wherever the infant goes [@AiraksinenRasanen2020; @FranchakTang2024] ADD LOBO. Collecting and annotating a relatively small amount of ground truth video has allowed researchers to train machine learning models that categorize infant position [@AiraksinenRasanen2020; @FranchakTang2024; @KretchEnriques2026] and restraint [@WangRousey2026].
+Categorizing infant movement from wearable sensors provides an alternative to video that is well-suited to collecting full-day behavior in the home. Customized sensor garments that embed one or more inertial movement units (IMUs) into infant leggings or "onesies" can be worn for an entire day or multiple days, recording temporally-rich data wherever the infant goes [@AiraksinenRasanen2020; @FranchakTang2024; @GreenspanCunha2021; @McElwainFisher2024]. Collecting and annotating a relatively small amount of ground truth video has allowed researchers to train machine learning models that categorize infant position [@AiraksinenRasanen2020; @FranchakTang2024; @KretchEnriques2026] and holding/restraint [@WangRousey2026; @AiraksinenGallen2022; @YaoPlotz2019] from the IMU signals.
 
-Chapter focuses on our workflow used in past work focusing on full-day position and restraint [@FranchakTang2024; @KretchEnriques2026; @WangRousey2026].
+In the remainder of this chapter, I describe how to collect wearable sensor data, process and train machine learning models, and evaluate model accuracy for infant movement detection in the home. Although I focus on the workflow developed in my lab for categorizing infant position and restraint [@FranchakTang2024; @KretchEnriques2026; @WangRousey2026], the approach could be extended to categorize other movements across different participant populations. Indeed, the same workflow has allowed us to train models to accurately categorize when infants' adult caregivers are standing upright throughout the day. I end the chapter with a review of current and future applications that can leverage full-day wearable sensor detection of natural movement.
 
 # Data Collection
 
@@ -88,6 +88,14 @@ Accuracy/kappa Kaya lab paper
 Continuous outcomes (Yao) for prevalence predictions Bout structure
 
 # Applications
+
+Mobile health and surveillance (Airaksinen)
+
+Understanding atypical devel trajectories
+
+basic time series, dyadic interactions, etc.
+
+Integration with other sensor modalities @RouseyTang2026 example. @KaurKumar2026 review
 
 # References
 
