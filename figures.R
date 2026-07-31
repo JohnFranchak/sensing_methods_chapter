@@ -172,3 +172,34 @@ ggplot(ds_total) +
   guides(color = guide_legend(nrow = 1)) +
   theme(legend.position = "bottom", axis.line = element_line(color = "black", linewidth = 0.4))
 ggsave("age_figure.png",width = 7.5, height = 5.5, unit = "in", scale = 1)
+
+## Timeline
+lims <- as_hms(c('07:00:00', '21:59:00'))
+hour_breaks = as_hms(c('07:00:00','08:00:00','09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00', '16:00:00', '17:00:00', '18:00:00', '19:00:00', '20:00:00', '21:00:00'))
+label_breaks = c("7am","","9am","","11am","","1pm","","3pm","","5pm","","7pm","","9pm")
+
+temp_data <- ds_sip %>% filter(id == 18, session == 3) %>% 
+  mutate(pos = factor(pos, levels=c("Held","Supine", "Prone", "Sitting", "Standing")))
+temp_data  %>% 
+  ggplot(aes(x = time_plot, y = pos)) + 
+  geom_raster() +  facet_wrap(~ restraint, nrow = 2) + 
+  scale_x_time(breaks = hour_breaks, name = "", limits = lims, labels = label_breaks) + 
+  theme(
+    axis.title.y = element_blank(),
+    legend.position = "bottom"
+  ) 
+ggsave("timeline_older.png",width = 7.5, height = 4.5, unit = "in", scale = 1)
+
+temp_data2 <- ds_sip %>% filter(id == 29, session == 1) %>% 
+  mutate(pos = factor(pos, levels=c("Held","Supine", "Prone", "Sitting", "Standing")))
+
+temp_data2  %>% 
+  ggplot(aes(x = time_plot, y = pos)) + 
+  geom_raster() +  facet_wrap(~ restraint, nrow = 2) + 
+  scale_x_time(breaks = hour_breaks, name = "", limits = lims, labels = label_breaks) + 
+  theme(
+    axis.title.y = element_blank(),
+    legend.position = "bottom"
+  ) 
+ggsave("timeline_younger.png",width = 7.5, height = 4.5, unit = "in", scale = 1)
+
