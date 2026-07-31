@@ -83,9 +83,11 @@ The pre-processing steps are important because they determine what information t
 
 ## Model Training and Validation
 
-Individual models vs. group models and generalization LOOCV examples Sensor CP model composition and size examples
+Evaluating and building machine learning models requires partitioning data into training and testing sets [@PargentSchoedel2022]. Training data sets are used to build a model, and testing data sets are used to evaluate the model using data that did not appear in the training set. Allowing testing data to appear in the training set could lead to overfitting, whereby the model appears to perform well because it has learned idiosyncratic features of the data set. More robust tests hold out entire participant sessions from the data set to see how well the model can generalize to new cases. In our past work [@FranchakTang2024; @WangRousey2026; @KretchEnriques2026] , we primarily have used leave-one-out cross-validation (LOOCV) in which we rotate through the entire set of participants to leave each one out as the testing set to see how well a model trained on the remaining participants can generalize. In some cases, we have also created customized training data sets to test specific hypotheses about model composition. For example, when assessing how best to predict body position in infants with cerebral palsy, we discovered that models that mix data from infants with cerebral palsy and with typical development outperform models that contain only a single participant group [e.g., @KretchEnriques2026].
 
-Point to general refs about binary and multi-class categorization Project needs dictate what is relevant for evaluation (overall metrics vs. bouts, absolute time vs. relative time, generalization to new exemplars vs. best prediction of current data)
+<!--# Individual models? -->
+
+Models can be trained once data are partitioned. We have exclusively used random forest models CITE in our past work because they perform well in multi-class categorization, are resistant to overfitting, and do not require much tuning compared with other models we tested, such as XGBoost, tabnet, and Catboost CHECK. Random forest models are easy to implement in R, Python, or Julia on consumer hardware with syntax similar to fitting a linear regression. Although we tune hyperparameters, such as the number of trees and the number of features to select per split, their values have minimal effect on classification performance (\< 1% difference in accuracy). Once a model has been trained, it can be used to predict classification labels for new exemplars, such as extending to full-day data or new participants for which no ground truth labels exist. @fig-timeline shows full-day predictions for a 9-month-old and an 11-month-old predicted from a model trained from participants in a different study [i.e., @KretchEnriques2026].
 
 ```{r fig-timeline}
 #| fig-cap: Full-day timelines for two infants 
@@ -96,7 +98,9 @@ Point to general refs about binary and multi-class categorization Project needs 
 knitr::include_graphics('timelines.png')
 ```
 
-## Validation of Position and Restraint Models
+## Performance of Position and Restraint Models
+
+Point to general refs about binary and multi-class categorization Project needs dictate what is relevant for evaluation (overall metrics vs. bouts, absolute time vs. relative time, generalization to new exemplars vs. best prediction of current data)
 
 Accuracy/kappa Kaya lab paper
 
