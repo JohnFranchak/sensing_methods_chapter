@@ -1,0 +1,17 @@
+﻿Metric,Class,Biostamp_Position,Axivity_Position,Biostamp_Restraint,Axivity_Restraint
+Accuracy,Overall,0.89,0.9,0.87,0.95
+Kappa,Overall,0.84,0.83,0.7,0.99
+Sensitivity,Held,0.84,0.9,,
+Sensitivity,Supine,0.91,0.87,,
+Sensitivity,Prone,0.88,0.95,,
+Sensitivity,Sitting,0.9,0.84,,
+Sensitivity,Standing,0.91,0.86,,
+Sensitivity,Restrained,,,0.81,0.99
+Sensitivity,Unrestrained,,,0.92,0.99
+PPV,Held,0.94,0.72,,
+PPV,Supine,0.84,0.76,,
+PPV,Prone,0.89,0.97,,
+PPV,Sitting,0.89,0.93,,
+PPV,Standing,0.86,0.79,,
+PPV,Restrained,,,0.83,0.99
+PPV,Unrestrained,,,0.86,0.99

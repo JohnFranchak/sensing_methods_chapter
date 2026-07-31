@@ -37,6 +37,27 @@ format:
     documentmode: man
 ---
 
+```{r}
+#| include: false
+set.seed(2025)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+
+library(tidyverse)
+library(flextable)
+library(ftExtra)
+library(conflicted)
+library(papaja)
+conflicts_prefer(purrr::discard)
+conflicts_prefer(dplyr::filter, .quiet = TRUE)
+conflicts_prefer(dplyr::lead, .quiet = TRUE)
+conflicts_prefer(dplyr::lag, .quiet = TRUE)
+conflicts_prefer(flextable::separate_header, .quiet = TRUE)
+conflicts_prefer(flextable::theme_apa)
+conflicts_prefer(janitor::make_clean_names, .quiet = TRUE)
+
+metrics <- read_csv("metrics.csv")
+```
+
 Everyday learning inputs—visual experiences, object interactions, and social exchanges—are filtered through infants' motor systems. In this chapter, I focus on two aspects of movement: position and restraint. Position refers to the configuration of the body with respect to gravity, such as lying supine on the back, prone on the stomach (whether stationary or crawling), sitting, or standing upright (whether stationary or walking). Infants' position from moment to moment shapes their view of objects and faces [@LuoFranchak2020; @KretchFranchak2014], constrains how they explore objects in their hands [@SoskaAdolph2014; @KretchMarcinowski2022], and predicts the frequency of adults' speech [@RouseyTang2026]. Restraint refers to infants' opportunity to switch positions [@WangRousey2026]. When infants are restrained, such as held in a caregiver's arms or strapped into a car seat or high chair, they cannot change positions. When unrestrained, infants can voluntarily switch between positions in their motor skill repertoire. Restraint also shapes everyday learning inputs: Infants have broader views of the environment when carried off the ground [@KretchAdolph2015], but infants have less access to objects [@FranchakKadooka2024] and hear less adult speech when restrained [@MalachowskiSalo2023].
 
 Thus, infants' opportunities for learning depending on how much time they spend in different positions and restraint in everyday life, which vary according to infants' age, motor skill development, and caregiving choices. With age, infants spend less time supine and restrained and spend more time sitting and standing [@KretchLuna2025; @FranchakKadooka2024; @Franchak2019aa; @FranchakRousey2026]. Infants who can sit independently spend more time sitting unrestrained [@KretchLuna2025], and infants who can walk independently spend more time standing upright [@FranchakRousey2026]. Despite these developmental trends, there are considerable individual differences that likely depend on caregiving practices and daily routines. Whereas some caregivers may choose to more often use specialized devices likes swings, jumpers, and exersaucers [@CallahanSisler1997; @KarasikKuchirko2022], others may more often choose to hold infants in their arms or position infants on the floor. Caregivers' choices about daily activities, such as errands and meals, also matter: Infants spend more time restrained when out of the house on errands and during mealtime [@FranchakFord2026].
@@ -111,7 +132,24 @@ To date, we have trained position and restraint models on two independent data s
 knitr::include_graphics('age_figure.png')
 ```
 
-To better evaluate model performance, we compare model predicted classifier outputs against ground truth human annotations for each window in a given testing data set. It is important to assess multiple metrics of classification performance, especially in data sets with imbalanced frequency of categories (e.g., prone is typically rare and sitting is frequent at all ages). Overall accuracy (percentage agreement between human codes and model predictions) can mask poor prediction of low-frequency categories if the model does well at predicting the most frequent ones [@deBarbaroMadden-Rusnak2026aa]. Other metrics, such as macro-F1 and kappa statistics, help address class imbalance. Furthermore, by-class metrics quantify how well a model does at detecting true instances of a class (sensitivity) and how likely a prediction of a certain class matched the target behavior (positive predictive value).
+To better evaluate model performance, we compare model predicted classifier outputs against ground truth human annotations for each window in a given testing data set. It is important to assess multiple metrics of classification performance, especially in data sets with imbalanced frequency of categories (e.g., prone is typically rare and sitting is frequent at all ages). Overall accuracy (percentage agreement between human codes and model predictions) can mask poor prediction of low-frequency categories if the model does well at predicting the most frequent ones [@deBarbaroMadden-Rusnak2026aa]. Other metrics, such as macro-F1 and kappa statistics, help address class imbalance. Furthermore, by-class metrics quantify how well a model does at detecting true instances of a class (sensitivity) and how likely a prediction of a certain class matched the target behavior (positive predictive value). @tab-metrics summarizes these metrics across the Biostamp and Axivity models of position and restraint through LOOCV.
+
+```{r tab-metrics}
+#| tab-cap: Performance of position and restraint models for two data sets
+#| apa-note: Biostamp performance values are means across 146 LOOCV iterations and Axivity model values are means across 55 LOOCV iterations.
+
+metrics %>% 
+  flextable() %>% flextable::theme_apa() %>% line_spacing(part = "all") %>% 
+  padding(padding.top = 2, padding.bottom = 2) %>% 
+  set_header_labels(Biostamp_Position = "Biostamp", Biostamp_Restraint = "Biostamp", Axivity_Position = "Axivity", Axivity_Restraint = "Axivity" ) %>% 
+  add_header_row(values = c("", "Position", "Restraint"), colwidths = c(2,2,2)) %>% 
+  merge_v(j = "Metric") %>% fix_border_issues() %>% 
+  hline(i = c(2,9)) %>% 
+  set_table_properties(layout = "autofit", width = .6) %>% 
+  align(align = "center", part = "all")
+
+```
+
 
 Project needs dictate what is relevant for evaluation (overall metrics vs. bouts, absolute time vs. relative time, generalization to new exemplars vs. best prediction of current data). Continuous outcomes (Yao) for prevalence predictions. Distal comparison. Bout structure
 
