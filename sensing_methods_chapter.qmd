@@ -110,46 +110,13 @@ Evaluating and building machine learning models requires partitioning data into 
 
 Models can be trained once data are partitioned. We have exclusively used random forest models CITE in our past work because they perform well in multi-class categorization, are resistant to overfitting, and do not require much tuning compared with other models we tested, such as XGBoost, tabnet, and Catboost CHECK. Random forest models are easy to implement in R, Python, or Julia on consumer hardware. Although we tune hyperparameters, such as the number of trees and the number of features to select per split, their values have minimal effect on classification performance (\< 1% difference in accuracy). Once a model has been trained, it can be used to predict classification labels for new exemplars, such as extending to full-day data or new participants for which no ground truth labels exist. @fig-timeline shows full-day predictions for a 9-month-old and an 11-month-old predicted from a model trained from participants in a different study [i.e., @KretchEnriques2026].
 
-```{r fig-timeline}
-#| fig-cap: Full-day timelines for two infants 
-#| fig-width: 7.5 
-#| fig-height: 7.5 
-#| apa-note: Full-day timelines of position and restraint for exemplar (A) 9-month-old and (B) 11-month-old infants. Each black rectangle indicates the machine learning model prediction of restrained (top row) and unrestrained (bottom row) positions. Vertical lines mark the start and end times of each recording and gray rectangles signify nap times when data were excluded. 
 
-knitr::include_graphics('timelines.png')
-```
 
 ## Performance of Position and Restraint Models
 
 To date, we have trained position and restraint models on two independent data sets, one that used Biostamp sensors [@FranchakTang2024; @WangRousey2026] and one that used the Axivity sensors [@KretchEnriques2026]. Aside from the sensor hardware and participants themselves (variation in participant number and ages), all aspects of the procedure were identical across the data sets—sensor placement, ground truth annotation, windowing and motion features pre-processing, LOOCV data partitioning, and random forest modeling. Thus, each model comprises an independent replication of these procedures. @fig-age shows summarized results---daily time spent in each position/restraint combination---by infant age with predictions made from the two different model sets. Moreover, each data set includes infants at 7 and 11 months, allowing direct age-matched comparisons. As @fig-age shows, the summarized data have strong face validity: With age, infants spend less time supine and more time sitting and standing. In particular, older infants spend increasing amounts of time in unrestrained sitting and standing positions as their motor skills develop. More sitting and standing time in younger infants was while restrained, such as when supported by a caregiver or placed in an infant seat or exersaucer. Although the position and restraint models are fully independent of each other, they show strong consistency in that moments were rarely classified as unrestrained and held (by definition, impossible) or restrained and prone (unlikely although possible). Of course, the models are not perfect. The notable outlier session that contains a large amount of restrained holding time is likely a classification error.
 
-```{r fig-age}
-#| fig-cap: Full-day predictions of position and restraint time by age 
-#| fig-width: 7.5 
-#| fig-height: 6 
-#| apa-note: Each column shows one position's time when restrained (top row), unrestrained (middle row) or in total (bottom row). Each point indicates data from one infant's session. Solid black lines indicate LOESS trends with age in months. Sessions were drawn from studies that used two different inertial sensors with different corresponding models (triangular points indicate Biostamp sensors, circular points indicate Axivity sensors). Data from both models at 7 and 11 months suggest that both models yield similar results. 
-
-knitr::include_graphics('age_figure.png')
-```
-
-To better evaluate model performance, we compare model predicted classifier outputs against ground truth human annotations for each window in a given testing data set. It is important to assess multiple metrics of classification performance, especially in data sets with imbalanced frequency of categories (e.g., prone is typically rare and sitting is frequent at all ages). Overall accuracy (percentage agreement between human codes and model predictions) can mask poor prediction of low-frequency categories if the model does well at predicting the most frequent ones [@deBarbaroMadden-Rusnak2026aa]. Other metrics, such as macro-F1 and kappa statistics, help address class imbalance. Furthermore, by-class metrics quantify how well a model does at detecting true instances of a class (sensitivity) and how likely a prediction of a certain class matched the target behavior (positive predictive value). @tab-metrics summarizes these metrics across the Biostamp and Axivity models of position and restraint through LOOCV.
-
-```{r tab-metrics}
-#| tab-cap: Performance of position and restraint models for two data sets
-#| apa-note: Biostamp performance values are means across 146 LOOCV iterations and Axivity model values are means across 55 LOOCV iterations.
-
-metrics %>% 
-  flextable() %>% flextable::theme_apa() %>% line_spacing(part = "all") %>% 
-  padding(padding.top = 2, padding.bottom = 2) %>% 
-  set_header_labels(Biostamp_Position = "Biostamp", Biostamp_Restraint = "Biostamp", Axivity_Position = "Axivity", Axivity_Restraint = "Axivity" ) %>% 
-  add_header_row(values = c("", "Position", "Restraint"), colwidths = c(2,2,2)) %>% 
-  merge_v(j = "Metric") %>% fix_border_issues() %>% 
-  hline(i = c(2,9)) %>% 
-  set_table_properties(layout = "autofit", width = .6) %>% 
-  align(align = "center", part = "all")
-
-```
-
+To better evaluate model performance, we compare model predicted classifier outputs against ground truth human annotations for each window in a given testing data set. It is important to assess multiple metrics of classification performance, especially in data sets with imbalanced frequency of categories (e.g., prone is typically rare and sitting is frequent at all ages). Overall accuracy (percentage agreement between human codes and model predictions) can mask poor prediction of low-frequency categories if the model does well at predicting the most frequent ones [@deBarbaroMadden-Rusnak2026aa]. Other metrics, such as macro-F1 and kappa statistics, help address class imbalance. Furthermore, by-class metrics quantify how well a model does at detecting true instances of a class (sensitivity) and how likely a prediction of a certain class matched the target behavior (positive predictive value). @tbl-metrics summarizes these metrics across the Biostamp and Axivity models of position and restraint through LOOCV.
 
 Project needs dictate what is relevant for evaluation (overall metrics vs. bouts, absolute time vs. relative time, generalization to new exemplars vs. best prediction of current data). Continuous outcomes (Yao) for prevalence predictions. Distal comparison. Bout structure
 
@@ -167,3 +134,38 @@ Integration with other sensor modalities @RouseyTang2026 example. @KaurKumar2026
 
 ::: {#refs}
 :::
+
+{{< pagebreak >}}
+```{r tbl-metrics}
+#| tbl-cap: Performance of position and restraint models for two data sets
+#| apa-note: Biostamp performance values are means across 146 LOOCV iterations and Axivity model values are means across 55 LOOCV iterations.
+
+metrics %>% 
+  flextable() %>% flextable::theme_apa() %>% line_spacing(part = "all") %>% 
+  padding(padding.top = 2, padding.bottom = 2) %>% 
+  set_header_labels(Biostamp_Position = "Biostamp", Biostamp_Restraint = "Biostamp", Axivity_Position = "Axivity", Axivity_Restraint = "Axivity" ) %>% 
+  add_header_row(values = c("", "Position", "Restraint"), colwidths = c(2,2,2)) %>% 
+  merge_v(j = "Metric") %>% fix_border_issues() %>% 
+  hline(i = c(2,9)) %>% 
+  set_table_properties(layout = "autofit", width = .6) %>% 
+  align(align = "center", part = "all")
+
+```
+{{< pagebreak >}}
+```{r fig-timeline}
+#| fig-cap: Full-day timelines for two infants 
+#| fig-width: 6.5 
+#| fig-height: 6.5 
+#| apa-note: Full-day timelines of position and restraint for exemplar (A) 9-month-old and (B) 11-month-old infants. Each black rectangle indicates the machine learning model prediction of restrained (top row) and unrestrained (bottom row) positions. Vertical lines mark the start and end times of each recording and gray rectangles signify nap times when data were excluded. 
+
+knitr::include_graphics('timelines.png')
+```
+{{< pagebreak >}}
+```{r fig-age}
+#| fig-cap: Full-day predictions of position and restraint time by age 
+#| fig-width: 7.5 
+#| fig-height: 6 
+#| apa-note: Each column shows one position's time when restrained (top row), unrestrained (middle row) or in total (bottom row). Each point indicates data from one infant's session. Solid black lines indicate LOESS trends with age in months. Sessions were drawn from studies that used two different inertial sensors with different corresponding models (triangular points indicate Biostamp sensors, circular points indicate Axivity sensors). Data from both models at 7 and 11 months suggest that both models yield similar results. 
+
+knitr::include_graphics('age_figure.png')
+```
